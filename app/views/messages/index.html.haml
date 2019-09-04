@@ -1,0 +1,53 @@
+-# .flash-box
+-#   グループを作成しました
+.wrapper
+  .chat-side
+    .chat-side__header
+      .chat-side__header__user
+        .chat-side__header__user__name
+          名前が入ります
+        .chat-side__header__user__font-awesom
+          .chat-side__header__user__font-awesom__edit
+            = link_to "https://www.facebook.com/" do
+              %i.fa.fa-edit
+          .chat-side__header__user__font-awesom__set
+            = link_to "https://www.instagram.com/" do
+              %i.fa.fa-cog
+    .chat-side__groups
+      .chat-side__groups__element
+        .chat-side__groups__element__title
+          チャットのグループ名
+        .chat-side__groups__element__comment
+          直近のコメント
+  .chat-main
+    .chat-main__header
+      .chat-main__header__box
+        .chat-main__header__box__name
+          チャットのグループ名
+        .chat-main__header__box__member
+          参加メンバーの名前
+      = link_to "https://www.instagram.com/" do
+        %div.chat-main__header__edit-btn.chat-main__header__edit-btn__text
+          Edit
+    .chat-main__messages
+      .chat-main__messages__box
+        .chat-main__messages__box__top
+          .chat-main__messages__box__top__user
+            コメントした人の名前
+          .chat-main__messages__box__top__date
+            コメントした日時
+        .chat-main__messages__box__bottom
+          コメント
+    .chat-main__form
+      .chat-main__form__post
+        .chat-main__form__post__left
+          .chat-main__form__post__left__text
+            type a message
+          .chat-main__form__post__left__image
+            %form{enctype: "multipart/form-data", method: :post}
+              %label.chat-main__form__post__left__image__element{for: "upload_icon"}
+                %i.fa.fa-image
+                  %input{type: "file", id: "upload_icon"}
+        = link_to "https://www.instagram.com/" do
+          %div.chat-main__form__post__right.chat-main__form__post__right__text
+            Send

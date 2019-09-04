@@ -1,0 +1,10 @@
+@mixin middle_located() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin both_end_located() {
+  display: flex;
+  justify-content: space-between;
+}
