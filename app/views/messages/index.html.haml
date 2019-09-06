@@ -1,5 +1,3 @@
--# .flash-box
--#   グループを作成しました
 .wrapper
   .chat-side
     .chat-side__header
@@ -30,24 +28,23 @@
         %div.chat-main__header__edit-btn.chat-main__header__edit-btn__text
           Edit
     .chat-main__messages
-      .chat-main__messages__box
-        .chat-main__messages__box__top
-          .chat-main__messages__box__top__user
-            コメントした人の名前
-          .chat-main__messages__box__top__date
-            コメントした日時
-        .chat-main__messages__box__bottom
-          コメント
+      = render @messages
     .chat-main__form
       .chat-main__form__post
         .chat-main__form__post__left
           .chat-main__form__post__left__text
-            type a message
+            = form_for [@group, @message] do |f|
+              = f.text_field :content, placeholder: 'type a message'
+            -# type a message
           .chat-main__form__post__left__image
-            %form{enctype: "multipart/form-data", method: :post}
-              %label.chat-main__form__post__left__image__element{for: "upload_icon"}
-                %i.fa.fa-image
-                  %input{type: "file", id: "upload_icon"}
-        = link_to "https://www.instagram.com/" do
-          %div.chat-main__form__post__right.chat-main__form__post__right__text
-            Send
+            = f.label :image, class: '.chat-main__form__post__left__image__element', for: "upload_icon" do
+              %i.fa.fa-image
+              = f.file_field :image, id: "upload_icon"
+        = f.submit 'Send', class: '.chat-main__form__post__right.chat-main__form__post__right__text'
+        -#     %form{enctype: "multipart/form-data", method: :post}
+        -#       %label.chat-main__form__post__left__image__element{for: "upload_icon"}
+        -#         %i.fa.fa-image
+        -#           %input{type: "file", id: "upload_icon"}
+        -# = link_to "https://www.instagram.com/" do
+        -#   %div.chat-main__form__post__right.chat-main__form__post__right__text
+        -#     Send
