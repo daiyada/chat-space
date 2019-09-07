@@ -3,7 +3,6 @@
   width: 300px;
   float: left;
   
-  
   &__header {
     background-color: #253141;
     height: 100px;
@@ -121,26 +120,33 @@
     height: 90px;
     padding: 0px 40px 0px 40px;
     @include middle_located;
-    &__post{
+    .new_message{
       width: 100%;
       height: 50px;
       @include both_end_located;
       &__left{
         background-color: #fafafa;
         width: calc(100% - 100px);
-        padding: 0px 10px;
         @include both_end_located;
+        position: relative;
         align-items: center;
-        #upload_icon{
-          display: none;
-        }
         &__text{
-          color: #999999;
-        }
-        &__image{
-          padding: 0px 5px 0px 0px;
-          .fa{
-            color: black;
+          height: 50px;
+          width: 100%;
+          padding: 0px 40px 0px 10px;
+          border: 0px;
+          color: black;
+          // display: flex;
+          // justify-content: flex-end;
+          &__image{
+            position: absolute;
+            right: 10px;
+            .fa{
+              color: black;
+            }
+            &__hidden{
+              display: none;
+            }
           }
         }
       }
@@ -150,7 +156,6 @@
         color:#fafafa;
         background-color: #38aef0;
         margin: 0px 0px 0px 15px;
-        @include middle_located;
       }
     }
   }
@@ -159,3 +164,4 @@
 a{
   text-decoration: none;
 }
+
