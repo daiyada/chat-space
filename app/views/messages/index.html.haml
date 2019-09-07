@@ -3,20 +3,22 @@
     .chat-side__header
       .chat-side__header__user
         .chat-side__header__user__name
-          名前が入ります
+          = current_user.name
         .chat-side__header__user__font-awesom
           .chat-side__header__user__font-awesom__edit
-            = link_to "https://www.facebook.com/" do
+            = link_to new_group_path do
               %i.fa.fa-edit
           .chat-side__header__user__font-awesom__set
-            = link_to "https://www.instagram.com/" do
+            = link_to edit_user_path(current_user) do
               %i.fa.fa-cog
     .chat-side__groups
-      .chat-side__groups__element
-        .chat-side__groups__element__title
-          チャットのグループ名
-        .chat-side__groups__element__comment
-          直近のコメント
+      - current_user.groups.each do |group|
+        .chat-side__groups__element
+          = link_to group_messages_path(group) do
+            .chat-side__groups__element__title
+              = group.name
+            .chat-side__groups__element__comment
+              = group.show_last_message
   .chat-main
     .chat-main__header
       .chat-main__header__box
@@ -31,20 +33,13 @@
       = render @messages
     .chat-main__form
       .chat-main__form__post
+      = form_for [@group, @message] do |f|
         .chat-main__form__post__left
-          .chat-main__form__post__left__text
-            = form_for [@group, @message] do |f|
-              = f.text_field :content, placeholder: 'type a message'
-            -# type a message
+        = f.text_field :content, placeholder: 'type a message'
           .chat-main__form__post__left__image
-            = f.label :image, class: '.chat-main__form__post__left__image__element', for: "upload_icon" do
+            = f.label :image
               %i.fa.fa-image
-              = f.file_field :image, id: "upload_icon"
-        = f.submit 'Send', class: '.chat-main__form__post__right.chat-main__form__post__right__text'
-        -#     %form{enctype: "multipart/form-data", method: :post}
-        -#       %label.chat-main__form__post__left__image__element{for: "upload_icon"}
-        -#         %i.fa.fa-image
-        -#           %input{type: "file", id: "upload_icon"}
-        -# = link_to "https://www.instagram.com/" do
-        -#   %div.chat-main__form__post__right.chat-main__form__post__right__text
-        -#     Send
+              = f.file_field :image
+        .chat-main__form__post__right
+          .chat-main__form__post__right__text
+                = f.submit 'Send'
