@@ -31,15 +31,11 @@
           Edit
     .chat-main__messages
       = render @messages
-    -# .chat-main__form
-    -#   .chat-main__form__post
-    -#   = form_for [@group, @message] do |f|
-    -#     .chat-main__form__post__left
-    -#     = f.text_field :content, placeholder: 'type a message'
-    -#       .chat-main__form__post__left__image
-    -#         = f.label :image
-    -#           %i.fa.fa-image
-    -#           = f.file_field :image
-    -#     .chat-main__form__post__right
-    -#       .chat-main__form__post__right__text
-    -#             = f.submit 'Send'
+    .chat-main__form
+      = form_for [@group, @message] do |f|
+        .new_message__left
+          = f.text_field :content, placeholder: 'type a message', class: "new_message__left__text" 
+          = f.label :image, class: "new_message__left__text__image" do
+            %i.fa.fa-image
+            = f.file_field :image, class: "new_message__left__text__image__hidden"
+        = f.submit 'Send',class: "new_message__right"
