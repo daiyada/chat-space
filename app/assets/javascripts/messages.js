@@ -1,7 +1,16 @@
 $(function(){
 
   function sendMessage(message){
-    var html = `<div class="chat-main__messages__box">
+    if (message.image != "null"){
+    var html_i = `<div class="chat-main__messages__box__bottom">
+                    <img class="l.chat-main__messages__box__bottom__image" src= ${message.image.url}>
+                    </img>
+                  </div>`
+      }
+    else{
+    var html_i =``
+    }
+    var html_m = `<div class="chat-main__messages__box">
                   <div class="chat-main__messages__box__top">
                     <div class="chat-main__messages__box__top__user">
                       ${message.user_name}
@@ -14,9 +23,10 @@ $(function(){
                     <div class="chat-main__messages__box__bottom__text">
                       ${message.content}
                     </div>
+                      ${html_i}
                   </div>
                  </div>`
-    return html;
+    return html_m;
   }
 
   $("#new_message").on("submit",function(e){
@@ -34,9 +44,11 @@ $(function(){
       contentType: false
     })
     .done(function(message){
-      var html = sendMessage(message);
-      $(".chat-main__messages").append(html);
+      var html_m = sendMessage(message);
+      $(".chat-main__messages").append(html_m);
       $("#message_content").val(" ")
+      $(".chat-main__messages").animate({scrollTop: $('.chat-main__messages')[0].scrollHeight}, 'fast');
+      $(".new_message__right").prop("disabled", false);
     })
     .fail(function(){
       alert("エラー");
