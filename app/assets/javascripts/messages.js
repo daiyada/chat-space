@@ -1,31 +1,24 @@
 $(function(){
 
   function sendMessage(message){
-      if (message.image.url != null){
-        var html_i = `<div class="chat-main__messages__box__bottom">
-                        <img class="l.chat-main__messages__box__bottom__image" src= ${message.image.url}>
-                        </img>
-                      </div>`
-      } else {
-        var html_i =``
-      }
-      var html_m = `<div class="chat-main__messages__box">
-                    <div class="chat-main__messages__box__top">
-                      <div class="chat-main__messages__box__top__user">
-                        ${message.user_name}
-                      </div>
-                      <div class="chat-main__messages__box__top__date">
-                        ${message.created_at}
-                      </div>
+    var html_i = message.image.url != null ?  `<img class="l.chat-main__messages__box__bottom__image" src= ${message.image.url}></img>` : ``;
+    var html_m = `<div class="chat-main__messages__box">
+                  <div class="chat-main__messages__box__top">
+                    <div class="chat-main__messages__box__top__user">
+                      ${message.user_name}
                     </div>
-                    <div class="chat-main__messages__box__bottom">
-                      <div class="chat-main__messages__box__bottom__text">
-                        ${message.content}
-                      </div>
-                        ${html_i}
+                    <div class="chat-main__messages__box__top__date">
+                      ${message.created_at}
                     </div>
-                  </div>`
-      return html_m;
+                  </div>
+                  <div class="chat-main__messages__box__bottom">
+                    <div class="chat-main__messages__box__bottom__text">
+                      ${message.content}
+                    </div>
+                      ${html_i}
+                  </div>
+                </div>`
+    return html_m;
   }
 
   $("#new_message").on("submit",function(e){
