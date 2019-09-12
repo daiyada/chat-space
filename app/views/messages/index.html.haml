@@ -23,10 +23,11 @@
     .chat-main__header
       .chat-main__header__box
         .chat-main__header__box__name
-          チャットのグループ名
+          = @group.name
         .chat-main__header__box__member
-          参加メンバーの名前
-      = link_to "https://www.instagram.com/" do
+          - @group.users.each do |user|
+            = user.name
+      = link_to edit_group_path(@group) do
         %div.chat-main__header__edit-btn.chat-main__header__edit-btn__text
           Edit
     .chat-main__messages
