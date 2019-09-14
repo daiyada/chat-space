@@ -25,6 +25,7 @@
         .chat-main__header__box__name
           = @group.name
         .chat-main__header__box__member
+          Member:
           - @group.users.each do |user|
             = user.name
       = link_to edit_group_path(@group) do
