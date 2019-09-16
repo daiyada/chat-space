@@ -15,13 +15,13 @@ $(function(){
                     <div class="chat-main__messages__box__bottom__text">
                       ${message.content}
                     </div>
-                      ${html_i}
+                    ${html_i}
                   </div>
                 </div>`
     return html_m;
   }
   var buildMessageHTML = function(message) {
-    if (message.content && message.image.url){
+      var img = message.image.url != null ? `<img src = "${message.image.url}", class= "chat-main__messages__box__bottom__image"></img>` : ``;
       var html = `<div class= "chat-main__messages__box" data-id= ${message.id}>
                     <div class= "chat-main__messages__box__top">
                       <div class= "chat-main__messages__box__top__user">
@@ -35,41 +35,10 @@ $(function(){
                       <div class= "chat-main__messages__box__bottom__text">
                         ${message.content}
                       </div>
-                      <img src = "${message.image.url}", class= "chat-main__messages__box__bottom__image">
+                      ${img}
                     </div>
                   </div>
                   `
-    } else if (message.content) {
-      var html = `<div class= "chat-main__messages__box" data-id= ${message.id}>
-                    <div class= "chat-main__messages__box__top">
-                      <div class= "chat-main__messages__box__top__user">
-                        ${message.user_name}
-                      </div>
-                      <div class= "chat-main__messages__box__top__date">
-                        ${message.created_at}
-                      </div>
-                    </div>
-                    <div class= "chat-main__messages__box__bottom">
-                      <div class= "chat-main__messages__box__bottom__text">
-                        ${message.content}
-                      </div>
-                    </div>
-                  </div>`
-    } else if (message.image.url) {
-      var html = `<div class= "chat-main__messages__box" data-id= ${message.id}>
-                    <div class= "chat-main__messages__box__top">
-                      <div class= "chat-main__messages__box__top__user">
-                        ${message.user_name}
-                      </div>
-                      <div class= "chat-main__messages__box__top__date">
-                        ${message.created_at}
-                      </div>
-                    </div>
-                    <div class= "chat-main__messages__box__bottom">
-                      <img src = "${message.image.url}", class= "chat-main__messages__box__bottom__image">
-                    </div>
-                  </div>`
-    };
     return html;
   }
 
