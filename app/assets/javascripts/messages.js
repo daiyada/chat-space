@@ -20,7 +20,6 @@ $(function(){
                 </div>`
     return html_m;
   }
-  // ↓ここにdata-id付与させないとそもそもメッセージ機能自体を非同期通信にしているから
   var buildMessageHTML = function(message) {
     if (message.content && message.image.url){
       var html = `<div class= "chat-main__messages__box" data-id= ${message.id}>
@@ -101,7 +100,6 @@ $(function(){
 
   var reloadMessages = function() {
     var last_message_id = $(".chat-main__messages__box:last").data("id");
-    // console.log(last_message_id);
     $.ajax({
       url: "api/messages",
       type: 'get',
@@ -114,13 +112,12 @@ $(function(){
         $(".chat-main__messages").append(insertHTML);
       })
       $(".chat-main__messages").animate({scrollTop: $('.chat-main__messages')[0].scrollHeight}, 'fast');
-      console.log("success");
     })
     .fail(function() {
       console.log("error");
     });
   };
   if(location.href.match("/groups/\\d+/messages")){
-    setInterval(reloadMessages, 10000);
+    setInterval(reloadMessages, 5000);
   }
 })
