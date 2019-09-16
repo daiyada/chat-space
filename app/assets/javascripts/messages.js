@@ -2,7 +2,7 @@ $(function(){
 
   function sendMessage(message){
     var html_i = message.image.url != null ?  `<img class="l.chat-main__messages__box__bottom__image" src= ${message.image.url}></img>` : ``;
-    var html_m = `<div class="chat-main__messages__box">
+    var html_m = `<div class="chat-main__messages__box", data-id= ${message.id}>
                   <div class="chat-main__messages__box__top">
                     <div class="chat-main__messages__box__top__user">
                       ${message.user_name}
@@ -19,6 +19,59 @@ $(function(){
                   </div>
                 </div>`
     return html_m;
+  }
+  // ↓ここにdata-id付与させないとそもそもメッセージ機能自体を非同期通信にしているから
+  var buildMessageHTML = function(message) {
+    if (message.content && message.image.url){
+      var html = `<div class= "chat-main__messages__box" data-id= ${message.id}>
+                    <div class= "chat-main__messages__box__top">
+                      <div class= "chat-main__messages__box__top__user">
+                        ${message.user_name}
+                      </div>
+                      <div class= "chat-main__messages__box__top__date">
+                        ${message.created_at}
+                      </div>
+                    </div>
+                    <div class= "chat-main__messages__box__bottom">
+                      <div class= "chat-main__messages__box__bottom__text">
+                        ${message.content}
+                      </div>
+                      <img src = "${message.image.url}", class= "chat-main__messages__box__bottom__image">
+                    </div>
+                  </div>
+                  `
+    } else if (message.content) {
+      var html = `<div class= "chat-main__messages__box" data-id= ${message.id}>
+                    <div class= "chat-main__messages__box__top">
+                      <div class= "chat-main__messages__box__top__user">
+                        ${message.user_name}
+                      </div>
+                      <div class= "chat-main__messages__box__top__date">
+                        ${message.created_at}
+                      </div>
+                    </div>
+                    <div class= "chat-main__messages__box__bottom">
+                      <div class= "chat-main__messages__box__bottom__text">
+                        ${message.content}
+                      </div>
+                    </div>
+                  </div>`
+    } else if (message.image.url) {
+      var html = `<div class= "chat-main__messages__box" data-id= ${message.id}>
+                    <div class= "chat-main__messages__box__top">
+                      <div class= "chat-main__messages__box__top__user">
+                        ${message.user_name}
+                      </div>
+                      <div class= "chat-main__messages__box__top__date">
+                        ${message.created_at}
+                      </div>
+                    </div>
+                    <div class= "chat-main__messages__box__bottom">
+                      <img src = "${message.image.url}", class= "chat-main__messages__box__bottom__image">
+                    </div>
+                  </div>`
+    };
+    return html;
   }
 
   $("#new_message").on("submit",function(e){
@@ -45,4 +98,29 @@ $(function(){
       alert("エラー");
     })
   })
+
+  var reloadMessages = function() {
+    var last_message_id = $(".chat-main__messages__box:last").data("id");
+    // console.log(last_message_id);
+    $.ajax({
+      url: "api/messages",
+      type: 'get',
+      dataType: 'json',
+      data: {last_id: last_message_id}
+    })
+    .done(function(messages) {
+      messages.forEach(function(message){
+        var insertHTML = buildMessageHTML(message);
+        $(".chat-main__messages").append(insertHTML);
+      })
+      $(".chat-main__messages").animate({scrollTop: $('.chat-main__messages')[0].scrollHeight}, 'fast');
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    });
+  };
+  if(location.href.match("/groups/\\d+/messages")){
+    setInterval(reloadMessages, 10000);
+  }
 })
