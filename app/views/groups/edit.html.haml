@@ -31,7 +31,8 @@
               %p.chat-group-user__name
                 = user.name
               .user-search-remove.chat-group-user__btn.chat-group-user__btn--remove.js-remove-btn
-                削除
+                - if (user.id != current_user.id)
+                  削除
     .chat-group-form__field.clearfix
       .chat-group-form__field--left
       .chat-group-form__field--right
